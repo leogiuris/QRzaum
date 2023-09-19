@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls.conf import include
 from QRzaum import views
 
 urlpatterns = [
     path('', views.home,name='home-page'),
+    path('qrcodes/',include ('qrcodes.urls'),name="homepage"),
     path('admin/', admin.site.urls),
 ]
