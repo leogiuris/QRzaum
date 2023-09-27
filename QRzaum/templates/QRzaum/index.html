@@ -1,0 +1,10 @@
+{% extends 'QRzaum/base.html' %}
+{% load static %}
+{% block title %}QRzaum{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+{% else %}
+  <a href="{% url 'login' %}"></a>
+{% endif %}
+{% endblock %}

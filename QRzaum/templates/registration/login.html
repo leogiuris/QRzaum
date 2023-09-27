@@ -1,0 +1,16 @@
+{% extends 'QRzaum/base.html' %}
+{% load static %}
+{% block title %}QRzaum{% endblock %}
+{% block content %}
+<h2>Log In</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input class="btn btn-primary" type="submit" value="Log In" />
+</form>
+<div>
+  <br>
+  <p style="display: inline;">Não possui conta?</p>
+  <a href="{% url 'signup' %}" class="btn btn-success">Sign Up</a>
+</div>
+{% endblock %}

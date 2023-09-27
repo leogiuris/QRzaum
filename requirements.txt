@@ -1,0 +1,7 @@
+asgiref
+Django
+sqlparse
+segno
+django-environ
+Pillow
+gunicorn

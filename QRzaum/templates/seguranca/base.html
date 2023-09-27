@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt_BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJANGO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    {% block css %}
+    {% endblock %}
+</head>
+
+<body>
+    {% include 'QRzaum/navbar.html' %}
+    <div class="container" style="font-size: large;">
+        <div style="display: inline;">
+            <a href="#">Segurança</a> |
+            {% if user.is_authenticated %}
+            <a href="#">Logout</a> |
+            <a href="#">troca senha</a> |
+            <a href="#">Perfil</a> |
+            {% else %}
+            <a href="#?next={% url 'home-page' %}">Login</a> |
+            <a href="#">Sign Up</a>
+            {% endif %}
+        </div>
+        <div style="display: inline;">
+            Você é {% firstof user.username "visitante" %}
+        </div>
+        <hr>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+
+</html>
