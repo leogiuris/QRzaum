@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-rln+(pkg#fsd$(w0g22eym(48fd4b2*xkmyu7e8d4qn!y87gy+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['qrzaum.rj.r.appspot.com',]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
