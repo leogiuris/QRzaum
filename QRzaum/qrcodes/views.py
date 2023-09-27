@@ -12,3 +12,4 @@ class QrcodeListView(View):
         qrcodes = QRCODE.objects.all()
         contexto = { 'qrcodes': qrcodes, }
         return render(request,'qrcodes/listAll.html',contexto)
+

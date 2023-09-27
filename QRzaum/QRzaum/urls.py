@@ -20,7 +20,11 @@ from django.urls.conf import include
 from QRzaum import views
 
 urlpatterns = [
-    path('', views.home,name='home-page'),
-    path('qrcodes/',include ('qrcodes.urls'),name="homepage"),
-    path('admin/', admin.site.urls),
+    path("", views.home, name="home-page"),
+    path("qrcodes/", include("qrcodes.urls"), name="homepage"),
+    path("admin/", admin.site.urls),
+    path("accounts/", include("accounts.urls")),  # new
+    path("accounts/", include("django.contrib.auth.urls")),
+    # path("accounts/", views.homeSec, name="sec-home"),
+    # path("accounts/registro/", views.registro, name="sec-registro"),
 ]
