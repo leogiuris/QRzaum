@@ -1,7 +1,0 @@
-runtime: python38
-entrypoint: gunicorn -b :$PORT QRzaum.wsgi
-env_variables:
-  DJANGO_SETTINGS_MODULE: 'QRzaum.settings'
-handlers:
-- url: /.*
-  script: auto
