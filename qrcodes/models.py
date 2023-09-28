@@ -1,5 +1,4 @@
 from django.db import models
-import segno 
 # Create your models here.
 
 class User(models.Model):
