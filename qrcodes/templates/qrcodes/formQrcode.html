@@ -1,0 +1,18 @@
+{% extends 'QRzaum/base.html' %}
+{% load static %}
+{% block content %}
+
+<h2>{{ titulo }}</h2>
+
+<br>
+<div>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table class='formulario'>
+            {{ formulario.as_table }}
+        </table>
+        <button type="submit" >{{ submitText }}</button>
+    </form>
+</div>
+
+{% endblock %}

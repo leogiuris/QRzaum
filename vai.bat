@@ -1,2 +1,2 @@
 
-python QRzaum/manage.py runserver
+python manage.py runserver

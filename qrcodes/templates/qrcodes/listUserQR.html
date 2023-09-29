@@ -1,0 +1,10 @@
+{% extends 'QRzaum/base.html' %}
+{% load static %}
+{% block content %}
+
+<h2>Meus QR Codes</h2>
+
+<a href="{% url 'qrcodes:criar-qrcode' %}" class="btn btn-success">Novo QR Code</a>
+
+
+{% endblock %}
