@@ -1,7 +1,24 @@
 {% extends 'QRzaum/base.html' %}
 {% load static %}
+
 {% block content %}
 
 <h2>QRCodes</h2>
+
+<p>{{host}}</p>
+<br>
+<div class="container">
+    {% for qr in qrcodes %}
+    <div>
+        {{qr.name}}
+        {{qr.user}}
+        <img src="{{qr.img_file.url}}" alt="">
+    </div> |
+    {% empty %}
+    <tr>
+        <th colspan="5">Ainda não tem QR Codes cadastrados</th>
+    </tr>
+    {% endfor %}
+</div>
 
 {% endblock %}

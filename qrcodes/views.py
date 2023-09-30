@@ -1,12 +1,18 @@
 from django.shortcuts import render, get_object_or_404
 from qrcodes.models import QRCODE
 from django.views.generic.base import View
-from django.contrib.auth import get_user
+from django.contrib.auth import get_user,get_user_model
+from django.core.files import File
+from django.db.models import Count
+from accounts.models import User
+import io
+import segno
 # from qrcodes.forms import ContatoModel2Form
 from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse_lazy
 from qrcodes.forms import QrcodeModel2Form
-
+from qrcodes.qrcode_utils import make_qr
+from django.core.files.base import ContentFile
 # Create your views here.
 
 
@@ -15,6 +21,7 @@ class QrcodeListView(View):
         qrcodes = QRCODE.objects.all()
         contexto = {
             "qrcodes": qrcodes,
+            "host": request.get_host(),
         }
         return render(request, "qrcodes/listAll.html", contexto)
 
@@ -40,10 +47,18 @@ class QrcodeCreateView(View):
     def post(self, request, *args, **kwargs):
         formulario = QrcodeModel2Form(request.POST)
         if formulario.is_valid():
-            print(formulario.data)
-            QR_code = formulario.save(commit=False)
-            QR_code.user = get_user(request)
-            QR_code.save()
+            new_qrcode = formulario.save(commit=False)
+            new_qrcode.user = get_user(request)
+            new_qrcode.save()
+            new_qrcode.data = str(request.get_host()) + "/" + str(new_qrcode.id)
+            print(new_qrcode.__dict__)
+            # make_qr(new_qrcode)
+            img = segno.make(new_qrcode.data)
+            out = io.BytesIO()
+            img.save(out,kind='png')
+            filename = str(new_qrcode.id) +".png"
+            new_qrcode.img_file.save(filename,ContentFile(out.getvalue()),save=False)
+            new_qrcode.save()
             return HttpResponseRedirect(reverse_lazy("qrcodes:lista-userqrcodes"))
         return render(
             request,
@@ -54,3 +69,11 @@ class QrcodeCreateView(View):
                 "submitText": "Criar Contato",
             },
         )
+
+# class GetQrcodeImage(View):
+#     def get(self, request, pk, *args, **kwargs):
+#         with open("files/qrcode_images/"+ pk + ".png") as f:
+#             return f
+
+def qrcode(request, pk):
+    return "files/qrcode_images/" + pk + ".png"
