@@ -1,10 +1,41 @@
 {% extends 'QRzaum/base.html' %}
 {% load static %}
+
 {% block content %}
 
+{% if user.is_authenticated %}
 <h2>Meus QR Codes</h2>
-
+<br>
 <a href="{% url 'qrcodes:criar-qrcode' %}" class="btn btn-success">Novo QR Code</a>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        {% for qr in qrcodes %}
+
+        <div class="col-md-4">
+            <div class="container">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="{{qr.img}}" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">{{qr.name}}</h5>
+                        <a href="#">{{qr.user}}</a>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+
+        {% empty %}
+        <tr>
+            <th colspan="5">Ainda não tem QR Codes cadastrados</th>
+        </tr>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<a href="{% url 'login' %}"></a>
+{% endif %}
 
 
 {% endblock %}

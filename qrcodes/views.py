@@ -30,7 +30,10 @@ class QrcodeListView(View):
 
 class UserQrcodeListView(View):
     def get(self, request, *args, **kwargs):
-        qrcodes = QRCODE.objects.all()
+        
+        qrcodes = QRCODE.objects.filter(user = get_user(request))
+        for obj in qrcodes:
+            obj.img = segno.make(obj.url).png_data_uri(scale = 5)
         contexto = {
             "qrcodes": qrcodes,
         }
