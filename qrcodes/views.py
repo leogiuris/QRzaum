@@ -105,10 +105,7 @@ class QrcodeDeleteView(View):
         return HttpResponseRedirect(reverse_lazy("qrcodes:lista-userqrcodes"))
     
 
-class QrcodeRedirect(View):
-    def get(self, request, pk,*args, **kwargs):
-        qrcode = QRCODE.objects.get(pk=pk)
-        url = qrcode.url
-        return redirect(url)
-    def post(self,request):
-        pass
+def QrcodeRedirect(request, pk):
+    qrcode = QRCODE.objects.get(pk=pk)
+    url = qrcode.url
+    return redirect(url)

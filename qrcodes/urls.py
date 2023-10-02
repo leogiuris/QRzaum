@@ -11,6 +11,6 @@ urlpatterns = [
     path('create/', views.QrcodeCreateView.as_view(),name='criar-qrcode'),
     path('update/<int:pk>', views.QrcodeUpdateView.as_view(),name='atualizar-qrcode'),
     path('delete/<int:pk>', views.QrcodeDeleteView.as_view(),name='apagar-qrcode'),
-    path('read/<int:pk>', views.QrcodeRedirect.as_view(),name='redirect'),
+    path('read/<int:pk>', views.QrcodeRedirect,name='redirect'),
 ]
 
