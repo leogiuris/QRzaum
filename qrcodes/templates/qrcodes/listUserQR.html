@@ -17,11 +17,10 @@
         <div class="container">
             <div class="card text-dark bg-light mb-3" style="width: 24rem;">
                 <br>
-                <h5 class="card-title text-sm-center">{{qr.name}}</h5>
+                <h5 class="card-title text-sm-center">{{qr.name}} (id:{{qr.id}})</h5>
                 <img class="card-img-top" src="{{qr.img}}" alt="">
                 <div class="card-body">
                     <h6 class="card-subtitle mb-2 text-muted">{{qr.url}}</h6>
-                    <a href="#">{{qr.user}}</a>
                 </div>
                 <div class="row justify-content-evenly">
                     <a href="{% url 'qrcodes:atualizar-qrcode' pk=qr.id %}"
@@ -46,7 +45,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Deseja apagar este QR Code?
+                    Deseja apagar <b>{{ qr.name }}</b>? ({{ qr.id }})
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
