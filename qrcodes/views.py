@@ -19,6 +19,8 @@ from django.core.files.base import ContentFile
 class QrcodeListView(View):
     def get(self, request, *args, **kwargs):
         qrcodes = QRCODE.objects.all()
+        for obj in qrcodes:
+            obj.img = segno.make(obj.url).png_data_uri(scale = 3)
         contexto = {
             "qrcodes": qrcodes,
             "host": request.get_host(),
