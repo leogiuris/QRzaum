@@ -52,14 +52,7 @@ class QrcodeCreateView(View):
             new_qrcode = formulario.save(commit=False)
             new_qrcode.user = get_user(request)
             new_qrcode.save()
-            new_qrcode.data = str(request.get_host()) + "/" + str(new_qrcode.id)
-            print(new_qrcode.__dict__)
-            # make_qr(new_qrcode)
-            img = segno.make(new_qrcode.data)
-            out = io.BytesIO()
-            img.save(out,kind='png')
-            filename = str(new_qrcode.id) +".png"
-            new_qrcode.img_file.save(filename,ContentFile(out.getvalue()),save=False)
+            new_qrcode.qr_data = str(request.get_host()) + "/" + str(new_qrcode.id)
             new_qrcode.save()
             return HttpResponseRedirect(reverse_lazy("qrcodes:lista-userqrcodes"))
         return render(
