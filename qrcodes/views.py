@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from qrcodes.models import QRCODE
 from django.views.generic.base import View
 from django.contrib.auth import get_user,get_user_model
@@ -82,6 +82,7 @@ class QrcodeUpdateView(View):
         formulario = QrcodeModel2Form(request.POST, instance=qrcode)
         if formulario.is_valid():
             qrcode = formulario.save() # cria uma pessoa com os dados do formulário
+            qrcode.qr_data = str(request.get_host()) + "/qrcodes/read/" + str(qrcode.id)
             qrcode.save() # salva uma pessoa no banco de dados
             return HttpResponseRedirect(reverse_lazy("qrcodes:lista-userqrcodes"))
         else:
@@ -108,6 +109,6 @@ class QrcodeRedirect(View):
     def get(self, request, pk,*args, **kwargs):
         qrcode = QRCODE.objects.get(pk=pk)
         url = qrcode.url
-        return HttpResponseRedirect(reverse_lazy(url))
+        return redirect(url)
     def post(self,request):
         pass
