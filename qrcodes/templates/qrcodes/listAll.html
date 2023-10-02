@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h2>QRCodes</h2>
+<h2>QR Codes</h2>
 
 <br>
 <div class="container">
@@ -12,10 +12,13 @@
 
         <div class="col-md-4">
             <div class="container">
-                <div class="card" style="width: 24rem;">
+                <div class="card text-dark bg-light mb-3" style="width: 24rem;">
+                    <br>
+                    <h5 class="card-title text-sm-center">{{qr.name}}</h5>
+                    
                     <img class="card-img-top" src="{{qr.img}}" alt="">
                     <div class="card-body">
-                        <h5 class="card-title">{{qr.name}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{qr.url}}</h6>
                         <a href="#">{{qr.user}}</a>
                     </div>
                 </div>

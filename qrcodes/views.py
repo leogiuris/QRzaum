@@ -67,6 +67,28 @@ class QrcodeCreateView(View):
             },
         )
 
+
+class QrcodeUpdateView(View):
+    def get(self,request,pk,*args, **kwargs):
+        qrcode = QRCODE.objects.get(pk=pk)
+        formulario = QrcodeModel2Form(instance=qrcode)
+        return render(request, 'qrcodes/formQrcode.html', 
+                      {"formulario":formulario, "titulo":"Edita um QR Code", "submitText":"Atualizar"})
+    
+    def post(self, request, pk, *args, **kwargs):
+        qrcode = get_object_or_404(QRCODE, pk=pk)
+        formulario = QrcodeModel2Form(request.POST, instance=qrcode)
+        if formulario.is_valid():
+            qrcode = formulario.save() # cria uma pessoa com os dados do formulário
+            qrcode.save() # salva uma pessoa no banco de dados
+            return HttpResponseRedirect(reverse_lazy("qrcodes:lista-userqrcodes"))
+        else:
+            print("nao é valido")
+            contexto = {'pessoa': formulario, "titulo":"Edita um QR Code", "submitText":"Atualizar"}
+            return render(request, 'qrcodes/formQrcode.html', contexto)
+
+
+
 class QrcodeDeleteView(View):
     def get(self,request,pk,*args, **kwargs):
         qrcode = QRCODE.objects.get(pk=pk)
