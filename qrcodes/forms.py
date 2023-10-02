@@ -16,9 +16,13 @@ class QrcodeModel2Form(forms.ModelForm):
         ),
         required=True,
     )
+    public = forms.BooleanField(
+        label="Público ",
+        initial=True,
+    )
     class Meta:
         model = QRCODE
-        fields = ["name","url"]
+        fields = ["name","url","public"]
 
 
     """

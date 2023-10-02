@@ -20,7 +20,7 @@ class QrcodeListView(View):
     def get(self, request, *args, **kwargs):
         qrcodes = QRCODE.objects.all()
         for obj in qrcodes:
-            obj.img = segno.make(obj.url).png_data_uri(scale = 5)
+            obj.img = segno.make(obj.url).png_data_uri(scale = 6)
         contexto = {
             "qrcodes": qrcodes,
             "host": request.get_host(),
@@ -30,10 +30,9 @@ class QrcodeListView(View):
 
 class UserQrcodeListView(View):
     def get(self, request, *args, **kwargs):
-        
         qrcodes = QRCODE.objects.filter(user = get_user(request))
         for obj in qrcodes:
-            obj.img = segno.make(obj.url).png_data_uri(scale = 5)
+            obj.img = segno.make(obj.url).png_data_uri(scale = 6)
         contexto = {
             "qrcodes": qrcodes,
         }
@@ -68,10 +67,16 @@ class QrcodeCreateView(View):
             },
         )
 
-# class GetQrcodeImage(View):
-#     def get(self, request, pk, *args, **kwargs):
-#         with open("files/qrcode_images/"+ pk + ".png") as f:
-#             return f
+class QrcodeDeleteView(View):
+    def get(self,request,pk,*args, **kwargs):
+        qrcode = QRCODE.objects.get(pk=pk)
+        contexto = { 'pessoa': qrcode, }
+        return render(  request, 
+                        'contatos/apagaContato.html', 
+                        contexto)
 
-def qrcode(request, pk):
-    return "files/qrcode_images/" + pk + ".png"
+    def post(self, request, pk, *args, **kwargs):
+        print("AAAAA")
+        qrcode = get_object_or_404(QRCODE, pk=pk)
+        qrcode.delete()
+        return HttpResponseRedirect(reverse_lazy("qrcodes:lista-userqrcodes"))
