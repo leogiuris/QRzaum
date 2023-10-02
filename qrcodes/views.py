@@ -22,7 +22,7 @@ class QrcodeListView(View):
         if 'user_id' in kwargs:
             qrcodes = qrcodes.filter(user = User.objects.get(id = kwargs['user_id']))
         for obj in qrcodes:
-            obj.img = segno.make(obj.url).png_data_uri(scale = 6)
+            obj.img = segno.make(obj.qr_data).png_data_uri(scale = 6)
         contexto = {
             "qrcodes": qrcodes,
             "host": request.get_host(),
@@ -34,7 +34,7 @@ class UserQrcodeListView(View):
     def get(self, request, *args, **kwargs):
         qrcodes = QRCODE.objects.filter(user = get_user(request))
         for obj in qrcodes:
-            obj.img = segno.make(obj.url).png_data_uri(scale = 6)
+            obj.img = segno.make(obj.qr_data).png_data_uri(scale = 6)
         contexto = {
             "qrcodes": qrcodes,
         }
@@ -56,7 +56,7 @@ class QrcodeCreateView(View):
             new_qrcode = formulario.save(commit=False)
             new_qrcode.user = get_user(request)
             new_qrcode.save()
-            new_qrcode.qr_data = str(request.get_host()) + "/" + str(new_qrcode.id)
+            new_qrcode.qr_data = str(request.get_host()) + "/qrcodes/read/" + str(new_qrcode.id)
             new_qrcode.save()
             return HttpResponseRedirect(reverse_lazy("qrcodes:lista-userqrcodes"))
         return render(
@@ -86,21 +86,28 @@ class QrcodeUpdateView(View):
             return HttpResponseRedirect(reverse_lazy("qrcodes:lista-userqrcodes"))
         else:
             print("nao é valido")
-            contexto = {'pessoa': formulario, "titulo":"Edita um QR Code", "submitText":"Atualizar"}
+            contexto = {'form': formulario, "titulo":"Edita um QR Code", "submitText":"Atualizar"}
             return render(request, 'qrcodes/formQrcode.html', contexto)
-
 
 
 class QrcodeDeleteView(View):
     def get(self,request,pk,*args, **kwargs):
         qrcode = QRCODE.objects.get(pk=pk)
-        contexto = { 'pessoa': qrcode, }
+        contexto = { 'qrcode': qrcode, }
         return render(  request, 
                         'contatos/apagaContato.html', 
                         contexto)
 
     def post(self, request, pk, *args, **kwargs):
-        print("AAAAA")
         qrcode = get_object_or_404(QRCODE, pk=pk)
         qrcode.delete()
         return HttpResponseRedirect(reverse_lazy("qrcodes:lista-userqrcodes"))
+    
+
+class QrcodeRedirect(View):
+    def get(self, request, pk,*args, **kwargs):
+        qrcode = QRCODE.objects.get(pk=pk)
+        url = qrcode.url
+        return HttpResponseRedirect(reverse_lazy(url))
+    def post(self,request):
+        pass

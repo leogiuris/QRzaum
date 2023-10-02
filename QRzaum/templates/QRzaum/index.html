@@ -11,7 +11,7 @@
   <div class="row justify-content-evenly">
     <a href="{% url 'qrcodes:lista-qrcodes' %}" class="btn btn-primary col-md-3">Explorar QR Codes</a>
     {% if user.is_authenticated %}
-    <a href="{% url 'qrcodes:lista-qrcodes' %}" class="btn btn-primary col-md-3">Criar QR Code</a>
+    <a href="{% url 'qrcodes:lista-userqrcodes' %}" class="btn btn-primary col-md-3">Criar QR Code</a>
     {% else %}
     <a href="{% url 'login' %}" class="btn btn-primary col-md-3">Criar QR Code</a>
     {% endif %}
