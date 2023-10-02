@@ -19,7 +19,7 @@
                     <img class="card-img-top" src="{{qr.img}}" alt="">
                     <div class="card-body">
                         <h6 class="card-subtitle mb-2 text-muted">{{qr.url}}</h6>
-                        <a href="#">{{qr.user}}</a>
+                        <a href="{% url 'qrcodes:lista-qrcodes' user_id=qr.user.id %}">{{qr.user}}</a>
                     </div>
                 </div>
                 <br>
