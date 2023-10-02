@@ -9,12 +9,20 @@
 <br>
 <div class="container">
     {% for qr in qrcodes %}
-    <div>
-        {{qr.name}}
-        {{qr.user}}
-        <img src="{{qr.img}}" alt="">
-    </div> 
-    <br>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="container">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="{{qr.img}}" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">{{qr.name}}</h5>
+                        <a href="#">{{qr.user}}</a>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
     {% empty %}
     <tr>
         <th colspan="5">Ainda não tem QR Codes cadastrados</th>
