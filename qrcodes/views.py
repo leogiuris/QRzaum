@@ -55,6 +55,7 @@ class QrcodeCreateView(View):
         if formulario.is_valid():
             new_qrcode = formulario.save(commit=False)
             new_qrcode.user = get_user(request)
+            new_qrcode.read_count = 0
             new_qrcode.save()
             new_qrcode.qr_data = str(request.get_host()) + "/qrcodes/read/" + str(new_qrcode.id)
             new_qrcode.save()
@@ -107,5 +108,7 @@ class QrcodeDeleteView(View):
 
 def QrcodeRedirect(request, pk):
     qrcode = QRCODE.objects.get(pk=pk)
+    qrcode.read_count += 1
+    qrcode.save()
     url = qrcode.url
     return redirect(url)

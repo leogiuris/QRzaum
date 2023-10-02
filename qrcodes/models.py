@@ -10,3 +10,4 @@ class QRCODE(models.Model):
     qr_data = models.CharField(max_length=9999,default="none")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     public = models.BooleanField(default=True)
+    read_count = models.PositiveIntegerField(default=0)
