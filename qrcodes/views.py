@@ -22,7 +22,7 @@ class QrcodeListView(View):
         if 'user_id' in kwargs:
             qrcodes = qrcodes.filter(user = User.objects.get(id = kwargs['user_id']))
         for obj in qrcodes:
-            obj.img = segno.make(obj.qr_data).png_data_uri(scale = 6)
+            obj.img = segno.make(obj.qr_data).png_data_uri(scale = 15)
         contexto = {
             "qrcodes": qrcodes,
             "host": request.get_host(),
@@ -34,7 +34,7 @@ class UserQrcodeListView(View):
     def get(self, request, *args, **kwargs):
         qrcodes = QRCODE.objects.filter(user = get_user(request))
         for obj in qrcodes:
-            obj.img = segno.make(obj.qr_data).png_data_uri(scale = 6)
+            obj.img = segno.make(obj.qr_data).png_data_uri(scale = 12)
         contexto = {
             "qrcodes": qrcodes,
         }
