@@ -1,4 +1,5 @@
 # QRzaum
+URL: http://leogiuris.pythonanywhere.com/
 ### Trabalho 1 da matéria Programação para a Web
 Aluno: Leonardo Giuri Santiago (1520893)
 
